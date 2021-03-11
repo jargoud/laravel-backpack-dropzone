@@ -1,0 +1,25 @@
+{
+  "name": "laravel-backpack-dropzone",
+  "version": "1.0.0",
+  "description": "Dropzone field for Laravel Backpack",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "mix": "npx mix --production"
+  },
+  "keywords": [
+    "laravel",
+    "backpack",
+    "dropzone"
+  ],
+  "author": "Jérémy Argoud",
+  "license": "ISC",
+  "devDependencies": {
+    "dropzone": "^5.8.1",
+    "laravel-mix": "^6.0.13",
+    "postcss": "^8.2.8"
+  }
+}
