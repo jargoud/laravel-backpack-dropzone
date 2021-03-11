@@ -6,41 +6,29 @@ use Illuminate\Support\ServiceProvider;
 
 class LaravelBackpackDropzoneServiceProvider extends ServiceProvider
 {
+    public const NAMESPACE = 'dropzone';
+
     /**
      * Bootstrap the application services.
      */
-    public function boot()
+    public function boot(): void
     {
-        /*
-         * Optional methods to load your package assets
-         */
-        // $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'laravel-backpack-dropzone');
-        // $this->loadViewsFrom(__DIR__.'/../resources/views', 'laravel-backpack-dropzone');
-        // $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
-        // $this->loadRoutesFrom(__DIR__.'/routes.php');
+        $this->loadViewsFrom(__DIR__ . '/../resources/views', self::NAMESPACE);
 
         if ($this->app->runningInConsole()) {
-            $this->publishes([
-                __DIR__ . '/../config/config.php' => config_path('laravel-backpack-dropzone.php'),
-            ], 'config');
+            $this->publishes(
+                [
+                    __DIR__ . '/../resources/views' => resource_path('views/vendor/' . self::NAMESPACE),
+                ],
+                'views'
+            );
 
-            // Publishing the views.
-            /*$this->publishes([
-                __DIR__.'/../resources/views' => resource_path('views/vendor/laravel-backpack-dropzone'),
-            ], 'views');*/
-
-            // Publishing assets.
-            /*$this->publishes([
-                __DIR__.'/../resources/assets' => public_path('vendor/laravel-backpack-dropzone'),
-            ], 'assets');*/
-
-            // Publishing the translation files.
-            /*$this->publishes([
-                __DIR__.'/../resources/lang' => resource_path('lang/vendor/laravel-backpack-dropzone'),
-            ], 'lang');*/
-
-            // Registering package commands.
-            // $this->commands([]);
+            $this->publishes(
+                [
+                    __DIR__ . '/../../resources' => public_path('vendor/' . self::NAMESPACE),
+                ],
+                'assets'
+            );
         }
     }
 
@@ -49,7 +37,23 @@ class LaravelBackpackDropzoneServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        // Automatically apply the package configuration
-        $this->mergeConfigFrom(__DIR__ . '/../config/config.php', 'laravel-backpack-dropzone');
+        $this->setupRoutes();
+    }
+
+    protected function setupRoutes(): self
+    {
+        // by default, use the routes file provided in vendor
+        $routeFilePath = '/routes/backpack/' . self::NAMESPACE . '.php';
+        $routeFilePathInUse = __DIR__ . '/../../' . $routeFilePath;
+
+        // but if there's a file with the same name in routes/backpack, use that one
+        $customRouteFilePath = base_path() . $routeFilePath;
+        if (file_exists($customRouteFilePath)) {
+            $routeFilePathInUse = $customRouteFilePath;
+        }
+
+        $this->loadRoutesFrom($routeFilePathInUse);
+
+        return $this;
     }
 }
