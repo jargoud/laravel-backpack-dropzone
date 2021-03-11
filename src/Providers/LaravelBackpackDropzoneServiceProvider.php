@@ -1,6 +1,6 @@
 <?php
 
-namespace Jargoud\LaravelBackpackDropzone;
+namespace Jargoud\LaravelBackpackDropzone\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -21,7 +21,7 @@ class LaravelBackpackDropzoneServiceProvider extends ServiceProvider
 
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__.'/../config/config.php' => config_path('laravel-backpack-dropzone.php'),
+                __DIR__ . '/../config/config.php' => config_path('laravel-backpack-dropzone.php'),
             ], 'config');
 
             // Publishing the views.
@@ -50,11 +50,6 @@ class LaravelBackpackDropzoneServiceProvider extends ServiceProvider
     public function register()
     {
         // Automatically apply the package configuration
-        $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'laravel-backpack-dropzone');
-
-        // Register the main class to use with the facade
-        $this->app->singleton('laravel-backpack-dropzone', function () {
-            return new LaravelBackpackDropzone;
-        });
+        $this->mergeConfigFrom(__DIR__ . '/../config/config.php', 'laravel-backpack-dropzone');
     }
 }
