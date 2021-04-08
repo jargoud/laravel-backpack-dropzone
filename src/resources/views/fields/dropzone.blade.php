@@ -23,7 +23,6 @@
   <input
     type="text"
     name="{{ $field['name'] }}"
-    id="dropzone-input"
     style="position:absolute; height: 1px; width: 1px; opacity: 0;"
   />
 </div>
