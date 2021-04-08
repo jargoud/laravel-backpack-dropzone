@@ -14,6 +14,7 @@ window.bpFieldInitDropzoneElement = (element) => {
   );
   const token = window.$('meta[name="csrf-token"]').attr('content');
   const input = element.find('input').get(0);
+  const button = document.getElementById(`${element.attr('id')}-button`);
 
   // Append token to the request - required for web routes
   myDropzone.on('sending', (file, xhr, formData) => {
@@ -29,6 +30,7 @@ window.bpFieldInitDropzoneElement = (element) => {
       // Check for final chunk and get the response
       const uploadResponse = JSON.parse(xhr.responseText);
       if (typeof uploadResponse.name === 'string') {
+        input.name = input.dataset.name;
         input.value = uploadResponse.path + uploadResponse.name;
       }
     };
@@ -38,4 +40,12 @@ window.bpFieldInitDropzoneElement = (element) => {
     this.removeAllFiles();
     this.addFile(file);
   });
+
+  if (button) {
+    button.addEventListener('click', () => {
+      input.name = input.dataset.name;
+      input.value = '';
+      button.parentNode.remove();
+    });
+  }
 };

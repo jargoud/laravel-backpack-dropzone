@@ -1,7 +1,9 @@
 @php
   if (empty($field['config']['url'])) {
-    $field['config']['url'] = route('dropzone');
+      $field['config']['url'] = route('dropzone');
   }
+
+  $id = 'dz-' . Illuminate\Support\Str::random();
 @endphp
 
 @include('crud::fields.inc.wrapper_start')
@@ -9,20 +11,26 @@
 @include('crud::fields.inc.translatable_icon')
 
 @if(!empty($field['value']))
-  <p>
+  <p style="display: flex; align-items: center; justify-content: space-between;">
     <a href="{{ $field['value'] }}" target="_blank">{{ $field['open_label'] ?? 'Open the file' }}</a>
+
+    @if($field['allow_delete'] ?? false)
+      <button type="button" id="{{ $id }}-button" class="btn btn-sm btn-ghost-danger">
+        <span class="la la-trash"></span>
+      </button>
+    @endif
   </p>
 @endif
 
 <div
-  id="dz-{{ Illuminate\Support\Str::random() }}"
+  id="{{ $id }}"
   class="dropzone"
   data-init-function="bpFieldInitDropzoneElement"
   data-config='@json($field['config'] ?? [], JSON_FORCE_OBJECT)'
 >
   <input
-    type="text"
-    name="{{ $field['name'] }}"
+    type="hidden"
+    data-name="{{ $field['name'] }}"
     style="position:absolute; height: 1px; width: 1px; opacity: 0;"
   />
 </div>
