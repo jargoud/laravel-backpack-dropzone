@@ -41,11 +41,21 @@ window.bpFieldInitDropzoneElement = (element) => {
     this.addFile(file);
   });
 
+  myDropzone.on('removedfile', function (file) {
+    if (button && !button.parentNode.classList.contains('d-none')) {
+      input.removeAttribute('name');
+    }
+
+    input.value = '';
+  });
+
   if (button) {
     button.addEventListener('click', () => {
-      input.name = input.dataset.name;
-      input.value = '';
-      button.parentNode.remove();
+      if (!input.value) {
+        input.name = input.dataset.name;
+        input.value = '';
+      }
+      button.parentNode.classList.add('d-none');
     });
   }
 };
