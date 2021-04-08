@@ -2,7 +2,11 @@
 
 All notable changes to `laravel-backpack-dropzone` will be documented in this file
 
-## 1.1.0 - 2021-03-11
+## 1.2.0 - 2021-04-08
+
+- Add field option to customize the "Open file" label in dropzone field view
+
+## 1.1.0 - 2021-04-08
 
 - Update Laravel requirements
 - Update PHP requirements
