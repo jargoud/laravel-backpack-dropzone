@@ -13,7 +13,7 @@ window.bpFieldInitDropzoneElement = (element) => {
     element.data('config')
   );
   const token = window.$('meta[name="csrf-token"]').attr('content');
-  const input = document.getElementById('dropzone-input');
+  const input = element.find('input').get(0);
 
   // Append token to the request - required for web routes
   myDropzone.on('sending', (file, xhr, formData) => {
