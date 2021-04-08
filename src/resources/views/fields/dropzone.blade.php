@@ -10,7 +10,7 @@
 
 @if(!empty($field['value']))
   <p>
-    <a href="{{ $field['value'] }}" target="_blank">Open the file</a>
+    <a href="{{ $field['value'] }}" target="_blank">{{ $field['open_label'] ?? 'Open the file' }}</a>
   </p>
 @endif
 
