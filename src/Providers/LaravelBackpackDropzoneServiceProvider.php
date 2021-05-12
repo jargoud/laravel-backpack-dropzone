@@ -38,6 +38,7 @@ class LaravelBackpackDropzoneServiceProvider extends ServiceProvider
     public function register()
     {
         $this->setupRoutes();
+        $this->registerConfig();
     }
 
     protected function setupRoutes(): self
@@ -53,6 +54,25 @@ class LaravelBackpackDropzoneServiceProvider extends ServiceProvider
         }
 
         $this->loadRoutesFrom($routeFilePathInUse);
+
+        return $this;
+    }
+
+    protected function registerConfig(): self
+    {
+        $configFileName = self::NAMESPACE . '.php';
+        $configPath = __DIR__.'/../../config/' . $configFileName;
+
+        // Publish the config
+        $this->publishes([
+            $configPath => config_path($configFileName),
+        ]);
+
+        // Merge the default config to prevent any crash or unfilled configs
+        $this->mergeConfigFrom(
+            $configPath,
+            self::NAMESPACE
+        );
 
         return $this;
     }

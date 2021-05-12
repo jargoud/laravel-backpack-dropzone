@@ -5,6 +5,7 @@ namespace Jargoud\LaravelBackpackDropzone\Http\Controllers;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Storage;
 use Pion\Laravel\ChunkUpload\Exceptions\UploadMissingFileException;
 use Pion\Laravel\ChunkUpload\Handler\AbstractHandler;
 use Pion\Laravel\ChunkUpload\Receiver\FileReceiver;
@@ -58,7 +59,7 @@ class DropzoneController extends Controller
 
         // Build the file path
         $filePath = "upload/{$mime}/{$dateFolder}/";
-        $finalPath = storage_path("app/" . $filePath);
+        $finalPath = Storage::disk(config('dropzone.storage.destination_disk'))->path($filePath);
 
         // move the file name
         $file->move($finalPath, $fileName);

@@ -17,10 +17,10 @@ composer config repositories.laravel-backpack-dropzone vcs https://github.com/ja
 composer require jargoud/laravel-backpack-dropzone
 ```
 
-Then, publish the package assets:
+Then, publish the package assets and config:
 
 ```shell
-php artisan vendor:publish --provider="Jargoud\LaravelBackpackDropzone\Providers\LaravelBackpackDropzoneServiceProvider" --tag="assets"
+php artisan vendor:publish --provider="Jargoud\LaravelBackpackDropzone\Providers\LaravelBackpackDropzoneServiceProvider"
 ```
 
 As this package relies on [pionl/laravel-chunk-upload](https://github.com/pionl/laravel-chunk-upload), you can publish
