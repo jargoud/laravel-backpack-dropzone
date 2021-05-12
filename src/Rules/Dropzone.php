@@ -32,7 +32,7 @@ class Dropzone implements Rule
     public function passes($attribute, $value)
     {
         $disk = Storage::disk(
-            config('chunk-upload.storage.disk')
+            config('dropzone.storage.destination_disk')
         );
 
         return $disk->exists($value)
