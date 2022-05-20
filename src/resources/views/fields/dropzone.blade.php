@@ -2,6 +2,12 @@
   if (empty($field['config']['url'])) {
       $field['config']['url'] = route('dropzone');
   }
+  if (!empty($field['value']) && is_string($field['value'])) {
+      $field['value'] = [$field['value']];
+  }
+  if (!isset($field['allow_multiple'])) {
+      $field['allow_multiple'] = true;
+  }
 
   $id = 'dz-' . Illuminate\Support\Str::random();
 @endphp
@@ -10,29 +16,20 @@
 <label>{!! $field['label'] !!}</label>
 @include('crud::fields.inc.translatable_icon')
 
-@if(!empty($field['value']))
-  <p style="display: flex; align-items: center; justify-content: space-between;">
-    <a href="{{ $field['value'] }}" target="_blank">{{ $field['open_label'] ?? 'Open the file' }}</a>
-
-    @if($field['allow_delete'] ?? false)
-      <button type="button" id="{{ $id }}-button" class="btn btn-sm btn-ghost-danger">
-        <span class="la la-trash"></span>
-      </button>
-    @endif
-  </p>
-@endif
-
 <div
   id="{{ $id }}"
   class="dropzone"
   data-init-function="bpFieldInitDropzoneElement"
   data-config='@json($field['config'] ?? [], JSON_FORCE_OBJECT)'
+  data-allow-multiple='@json(!!$field['allow_multiple'])'
 >
   <input
+    @if(!empty($field['value'])) data-value='@json($field['value'])' @endif
     type="hidden"
     data-name="{{ $field['name'] }}"
     style="position:absolute; height: 1px; width: 1px; opacity: 0;"
   />
+  <div data-input-list></div>
 </div>
 
 {{-- HINT --}}

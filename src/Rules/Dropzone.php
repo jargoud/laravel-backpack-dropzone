@@ -4,6 +4,7 @@ namespace Jargoud\LaravelBackpackDropzone\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class Dropzone implements Rule
 {
@@ -11,15 +12,20 @@ class Dropzone implements Rule
      * @var array
      */
     protected $mimeTypes;
+    /**
+     * @var callable|null
+     */
+    protected $isExistingUrlCallback;
 
     /**
      * Create a new rule instance.
      *
      * @param array $mimeTypes
      */
-    public function __construct(array $mimeTypes = [])
+    public function __construct(array $mimeTypes = [], callable $isExistingUrlCallback = null)
     {
         $this->mimeTypes = $mimeTypes;
+        $this->isExistingUrlCallback = $isExistingUrlCallback;
     }
 
     /**
@@ -35,8 +41,19 @@ class Dropzone implements Rule
             config('dropzone.storage.destination_disk')
         );
 
-        return $disk->exists($value)
-            && (empty($this->mimeTypes) || in_array($disk->mimeType($value), $this->mimeTypes));
+        if ($disk->exists($value)) {
+            return empty($this->mimeTypes) || in_array($disk->mimeType($value), $this->mimeTypes);
+        }
+
+        if (!empty($this->isExistingUrlCallback)) {
+            $callback = $this->isExistingUrlCallback;
+            return $callback($value);
+        }
+
+        $publicRelativePath = Str::replaceFirst(url("/"), "", $value);
+        $publicAbsolutePath = public_path($publicRelativePath);
+
+        return file_exists($publicAbsolutePath);
     }
 
     /**
