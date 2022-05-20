@@ -25,7 +25,7 @@ class LaravelBackpackDropzoneServiceProvider extends ServiceProvider
 
             $this->publishes(
                 [
-                    __DIR__ . '/../../resources' => public_path('vendor/' . self::NAMESPACE),
+                    __DIR__ . '/../../resources' => public_path('packages/' . self::NAMESPACE),
                 ],
                 'assets'
             );

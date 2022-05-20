@@ -47,10 +47,10 @@
     @endphp
 
     @push('crud_fields_styles')
-      <link href="{{ asset('vendor/dropzone/css/dropzone.css') }}" rel="stylesheet" type="text/css"/>
+      <link href="{{ asset('packages/dropzone/css/dropzone.css') }}" rel="stylesheet" type="text/css"/>
     @endpush
 
     @push('crud_fields_scripts')
-      <script src="{{ asset('vendor/dropzone/js/dropzone.js') }}"></script>
+      <script src="{{ asset('packages/dropzone/js/dropzone.js') }}"></script>
     @endpush
   @endif
