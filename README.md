@@ -39,6 +39,7 @@ CRUD::addField([
     'name' => 'video',
     'type' => 'dropzone',
     'view_namespace' => 'dropzone::fields',
+    'allow_multiple' => false, // false if missing key
     'config' => [
         // any option from the Javascript library
     ],
@@ -56,6 +57,12 @@ public function rules(): array {
     return [
         'video' => [
             new Dropzone(['video/mp4']),
+        ],
+        'photos' => [
+            'array',
+        ],
+        'photos.*' => [
+            new Dropzone(['image/png'], [MyModel::find($this->id), "isPhotoFileExisting"]),
         ],
     ];
 }
