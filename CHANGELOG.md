@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-backpack-dropzone` will be documented in this file
 
+## 2.0.1 - 2022-07-18
+
+- Add default config for CRUD::addField example in README.md
+
 ## 2.0.0 - 2022-05-20
 
 - Allow Laravel 9.x
