@@ -42,6 +42,8 @@ CRUD::addField([
     'allow_multiple' => false, // false if missing key
     'config' => [
         // any option from the Javascript library
+        'chunkSize' => 1024 * 1024 * 2, // for 2 MB
+        'chunking' => true,
     ],
 ]);
 ```
