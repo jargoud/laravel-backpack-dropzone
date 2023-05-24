@@ -58,7 +58,7 @@ class DropzoneController extends Controller
         $dateFolder = date("Y-m-W");
 
         // Build the file path
-        $filePath = "upload/{$mime}/{$dateFolder}/";
+        $filePath = "upload/$mime/$dateFolder/";
         $finalPath = Storage::disk(config('dropzone.storage.destination_disk'))->path($filePath);
 
         // move the file name

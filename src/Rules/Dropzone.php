@@ -2,40 +2,21 @@
 
 namespace Jargoud\LaravelBackpackDropzone\Rules;
 
+use Closure;
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class Dropzone implements Rule
 {
-    /**
-     * @var array
-     */
-    protected $mimeTypes;
-    /**
-     * @var callable|null
-     */
-    protected $isExistingUrlCallback;
-
-    /**
-     * Create a new rule instance.
-     *
-     * @param array $mimeTypes
-     */
-    public function __construct(array $mimeTypes = [], callable $isExistingUrlCallback = null)
+    public function __construct(protected array $mimeTypes = [], protected ?Closure $isExistingUrlCallback = null)
     {
-        $this->mimeTypes = $mimeTypes;
-        $this->isExistingUrlCallback = $isExistingUrlCallback;
     }
 
     /**
-     * Determine if the validation rule passes.
-     *
-     * @param string $attribute
-     * @param mixed $value
-     * @return bool
+     * @inheritDoc
      */
-    public function passes($attribute, $value)
+    public function passes($attribute, $value): bool
     {
         $disk = Storage::disk(
             config('dropzone.storage.destination_disk')
@@ -57,11 +38,9 @@ class Dropzone implements Rule
     }
 
     /**
-     * Get the validation error message.
-     *
-     * @return string
+     * @inheritDoc
      */
-    public function message()
+    public function message(): string
     {
         return trans(
             'validation.mimetypes',
