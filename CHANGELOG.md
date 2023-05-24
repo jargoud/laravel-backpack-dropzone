@@ -2,6 +2,12 @@
 
 All notable changes to `laravel-backpack-dropzone` will be documented in this file
 
+## 3.0.0 - 2023-05-24
+
+- Support for PHP 8.2
+- Support for Laravel 10
+- Support for Backpack 5
+
 ## 2.0.1 - 2022-07-18
 
 - Add default config for CRUD::addField example in README.md
