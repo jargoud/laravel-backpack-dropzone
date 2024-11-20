@@ -2,6 +2,12 @@
 
 All notable changes to `laravel-backpack-dropzone` will be documented in this file
 
+## 4.0.0 - 2024-11-20
+
+- Support for PHP 8.3
+- Support for Laravel 11
+- Support for Backpack 6
+
 ## 3.0.0 - 2023-05-24
 
 - Support for PHP 8.2
